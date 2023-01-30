@@ -9,10 +9,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.headers().frameOptions().disable();
+
+        http
+                .csrf().disable()
                 .authorizeRequests() // 요청에 의한 보안검사 시작
+                .antMatchers("/**")
 //                .anyRequest().authenticated() //어떤 요청에도 보안검사를 한다.
-                .anyRequest().permitAll(); //어떤 요청에도 보안검사를 한다.
+                .permitAll(); //어떤 요청에도 보안검사를 한다.
     }
 
 }

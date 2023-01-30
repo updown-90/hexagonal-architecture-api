@@ -2,11 +2,15 @@ package com.updown.api.account.presentation.dto;
 
 import lombok.Getter;
 
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 public class AccountUpdateRequestDTO {
 
+    @NotEmpty
     private Long id;
 
-    private String accountName;
+    @NotEmpty
+    private String changeAccountName;
 
 }
