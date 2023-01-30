@@ -5,6 +5,7 @@ import com.updown.api.account.infrastructure.repository.AccountEntityRepository;
 import com.updown.api.account.presentation.dto.AccountSaveRequestDTO;
 import com.updown.api.account.presentation.dto.AccountUpdateRequestDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

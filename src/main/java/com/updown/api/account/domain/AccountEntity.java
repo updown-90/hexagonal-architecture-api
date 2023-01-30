@@ -6,6 +6,8 @@ import com.updown.api.common.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
@@ -27,7 +29,8 @@ public class AccountEntity extends BaseTimeEntity {
     @Column(unique = true)
     private String loginId;
 
-    @Column
+    private String password;
+
     private String accountName;
 
     // 낙관적 잠금(Optimisstic Lock)은 현실적으로 데이터 갱신시 경합이 발생하지 않을 것이라고 낙관적으로 보고 잠금을 거는 기법입니다.
@@ -48,13 +51,21 @@ public class AccountEntity extends BaseTimeEntity {
     private Long version;
 
     @Builder
-    public AccountEntity(String loginId, String accountName) {
+    public AccountEntity(String loginId, String password, String accountName) {
         this.loginId = loginId;
+        this.password = password;
         this.accountName = accountName;
     }
 
     public static AccountEntity create(AccountSaveRequestDTO accountSaveRequestDTO) {
-        return new AccountEntity(accountSaveRequestDTO.getLoginId(), accountSaveRequestDTO.getAccountName());
+        // 해시 함수에는 MD5나 SHA 등의 종류가 있지만 BCrypt는 단순히 입력을 1회 해시시키는 것이 아니라 솔트(salt)를 부여하여 여러번 해싱하므로 더 안전하게 암호를 관리할 수 있다.
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        return AccountEntity.builder().
+                loginId(accountSaveRequestDTO.getLoginId()).
+                accountName(accountSaveRequestDTO.getAccountName()).
+                password(passwordEncoder.encode(accountSaveRequestDTO.getPassword())).
+                build();
     }
 
     public void update(AccountUpdateRequestDTO accountUpdateRequestDTO) {

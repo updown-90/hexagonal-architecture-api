@@ -11,6 +11,9 @@ public class AccountSaveRequestDTO {
     private String loginId;
 
     @NotEmpty
+    private String password;
+
+    @NotEmpty
     private String accountName;
 
 }

@@ -4,6 +4,7 @@ Content-Type: application/json
 
 {
   "loginId" : "testLoginId1",
+  "password" : "testPassword1",
   "accountName" : "testAccountName1"
 }
 
