@@ -2,6 +2,7 @@ package com.updown.api.account.domain;
 
 import com.updown.api.account.presentation.dto.AccountSaveRequestDTO;
 import com.updown.api.account.presentation.dto.AccountUpdateRequestDTO;
+import com.updown.api.common.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import javax.persistence.*;
 // @DynamicInsert, @DynamicUpdate 를 사용하게 되면 불필요한 DB 부하를 줄일 수 있고, default 값 대신에 null 값이 들어갈 일은 없을 것이다.
 @NoArgsConstructor
 @Table(name = "account")
-public class AccountEntity {
+public class AccountEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +43,7 @@ public class AccountEntity {
     //  4. B트랜잭션이 조회한 엔티티를 변경하여 커밋한다.
     //      > 커밋하기 전에 version을 확인한다. 어라~ 근데 내가 조회한 엔티티 version은 0인데 DB의 version은 1로 되어 있다.
     //      > 예외를 발생시킨다
+
     @Version
     private Long version;
 
