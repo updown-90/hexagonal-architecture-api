@@ -59,6 +59,7 @@ public class AccountEntity extends BaseTimeEntity {
 
     public static AccountEntity create(AccountSaveRequestDTO accountSaveRequestDTO) {
         // 해시 함수에는 MD5나 SHA 등의 종류가 있지만 BCrypt는 단순히 입력을 1회 해시시키는 것이 아니라 솔트(salt)를 부여하여 여러번 해싱하므로 더 안전하게 암호를 관리할 수 있다.
+        // 그리고 스프링 시큐리티에서 기본으로 BCrypt 써서 이걸로 넣음
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         return AccountEntity.builder().

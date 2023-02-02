@@ -1,60 +1,29 @@
 package com.updown.api.common.security;
 
 import com.updown.api.account.domain.AccountEntity;
-import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-@AllArgsConstructor
-public class SpringSecurityUserDetailsImpl implements UserDetails {
-    private AccountEntity accountEntity;
+// pring Security에서 제공하는 사용자 Interface로 UserDetails 가 있는데 이를 구현해 놓은 구현체로 User Class가 있다
+// UserDetails Interface 를 직접 구현하거나 User Class를 확장해서 사용하면 된다.
+public class SpringSecurityUserDetailsImpl extends User {
 
-    // User Entity가 가지고 있는 권한 목록을 저장하여 리턴한다.
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        // 권한 목록을 저장할 컬렉션
-        Collection<GrantedAuthority> roleList = new ArrayList<>();
-
-        // 권한 설정
-        roleList.add((GrantedAuthority) () -> "ROLE_" + accountEntity.getAccountName());
-
-        return roleList;
-    }
-    @Override
-    public String getPassword() {
-        return accountEntity.getPassword();
+    public SpringSecurityUserDetailsImpl(AccountEntity accountEntity) {
+        super(accountEntity.getLoginId(), accountEntity.getPassword(), authorities(accountEntity));
     }
 
-    @Override
-    public String getUsername() {
-        return accountEntity.getAccountName();
-    }
-
-    // 계정이 만료됐는지 여부를 리턴한다.
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    // 계정이 잠겨있는지 여부를 리턴한다.
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    // 비밀번호가 만료됐는지 여부를 리턴한다.
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    // 계정의 활성화 여부를 리턴한다.
-    @Override
-    public boolean isEnabled() {
-        return true;
+    private static Collection<? extends GrantedAuthority> authorities(AccountEntity accountEntity) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+//        if (accountEntity.isAdmin()) {
+//            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+//        } else {
+//            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+//        }
+        return authorities;
     }
 
 
