@@ -4,8 +4,9 @@ import com.updown.api.account.domain.AccountEntity;
 import com.updown.api.account.infrastructure.repository.AccountEntityRepository;
 import com.updown.api.account.presentation.dto.AccountSaveRequestDTO;
 import com.updown.api.account.presentation.dto.AccountUpdateRequestDTO;
+import com.updown.api.common.exception.CustomRuntimeException;
+import com.updown.api.common.exception.ExceptionType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class AccountService {
 
     public AccountEntity findAccountById(Long id) {
         return accountEntityRepository.findAccountById(id)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 사용자 입니다."));
+                .orElseThrow(() -> new CustomRuntimeException(ExceptionType.NOT_FOUND_USER));
     }
 
     public List<AccountEntity> findAllAccount() {
@@ -32,7 +33,7 @@ public class AccountService {
 
     public AccountEntity updateAccount(AccountUpdateRequestDTO accountUpdateRequestDTO) {
         AccountEntity accountEntity = accountEntityRepository.findById(accountUpdateRequestDTO.getId())
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 사용자 입니다."));
+                .orElseThrow(() -> new CustomRuntimeException(ExceptionType.NOT_FOUND_USER));
 
         accountEntity.update(accountUpdateRequestDTO);
         return accountEntityRepository.save(accountEntity);
@@ -45,7 +46,7 @@ public class AccountService {
     private boolean isEmptyDBLoginId(AccountSaveRequestDTO accountSaveRequestDTO) {
         accountEntityRepository.findAccountByLoginId(accountSaveRequestDTO.getLoginId())
             .ifPresent(accountEntity -> {   // ifPresent()는 Optional 객체가 값을 가지고 있으면 실행 값이 없으면 넘어감
-                throw new RuntimeException("이미 존재하는 사용자 입니다.");
+                throw new CustomRuntimeException(ExceptionType.NOT_FOUND_USER);
             });
 
         return true;
