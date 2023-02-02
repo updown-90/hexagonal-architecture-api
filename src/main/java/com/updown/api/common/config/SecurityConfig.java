@@ -20,12 +20,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .formLogin()
+            .formLogin() // 기본 로그인 화면 사용하는 설정
 
             .and()
             .csrf().disable() // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
 
-            .headers().frameOptions().sameOrigin()
+            .headers().frameOptions().sameOrigin() // h2-console 사용하기 위한 설정
 
             .and()
             .authorizeRequests() // HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정하겠다.
