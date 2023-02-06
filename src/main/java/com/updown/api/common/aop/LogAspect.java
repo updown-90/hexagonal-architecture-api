@@ -29,12 +29,12 @@ public class LogAspect {
 
     @Before("annotationLogging()")
     public void before() {
-        System.out.println("Log Start!");
+        log.info("Log Start!");
     }
 
     @After("annotationLogging()")
     public void after() {
-        System.out.println("Log End!");
+        log.info("Log End!");
     }
 
 }
