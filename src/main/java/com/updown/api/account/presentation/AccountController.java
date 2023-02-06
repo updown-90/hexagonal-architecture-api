@@ -24,8 +24,8 @@ public class AccountController {
     private final AccountService accountService;
 
 //    @ResponseStatus(HttpStatus.CREATED)
+//    @Logger 해당 어노테이션이 있으면 AOP 동작하도록 개발되어 있음
     @PostMapping
-    @Logger
     public AccountSaveResponseDTO createAccount(@RequestBody @Valid AccountSaveRequestDTO accountSaveRequestDTO) {
         return AccountEntityMapper.INSTANCE.accountEntityToAccountSaveResponseDTO(
                 accountService.createAccount(accountSaveRequestDTO)
