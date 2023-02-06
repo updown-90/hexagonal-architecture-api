@@ -27,12 +27,12 @@ public class LogAspect {
     @Pointcut("@annotation(com.updown.api.common.aop.Logger)")
     private void annotationLogging() {}
 
-    @Before("annotationLogging()")
+    @Before("logging() || annotationLogging()")
     public void before() {
         log.info("Log Start!");
     }
 
-    @After("annotationLogging()")
+    @After("logging() || annotationLogging()")
     public void after() {
         log.info("Log End!");
     }
