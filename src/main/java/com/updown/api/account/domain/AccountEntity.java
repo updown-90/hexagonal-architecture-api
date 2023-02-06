@@ -1,7 +1,7 @@
 package com.updown.api.account.domain;
 
-import com.updown.api.account.presentation.dto.AccountSaveRequestDTO;
-import com.updown.api.account.presentation.dto.AccountUpdateRequestDTO;
+import com.updown.api.account.presentation.dto.request.AccountSaveRequestDTO;
+import com.updown.api.account.presentation.dto.request.AccountUpdateRequestDTO;
 import com.updown.api.common.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -72,4 +72,5 @@ public class AccountEntity extends BaseTimeEntity {
     public void update(AccountUpdateRequestDTO accountUpdateRequestDTO) {
         this.accountName = accountUpdateRequestDTO.getChangeAccountName();
     }
+
 }

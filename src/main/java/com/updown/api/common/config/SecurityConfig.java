@@ -29,9 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             .and()
             .authorizeRequests() // HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정하겠다.
-            .antMatchers(HttpMethod.POST, "/account").permitAll() // 해당 패턴에 해당하는 것은 인증 허용
-            .antMatchers("/", "/h2-console/**", "/account/create").permitAll() // 해당 패턴에 해당하는 것은 인증 허용
-            .anyRequest().authenticated(); // 나너지 요청들에 대해서는 인증을 받아야한다.
+            .antMatchers("/**").permitAll();
+//            .antMatchers(HttpMethod.POST, "/account").permitAll() // 해당 패턴에 해당하는 것은 인증 허용
+//            .antMatchers("/", "/h2-console/**", "/account/create").permitAll() // 해당 패턴에 해당하는 것은 인증 허용
+//            .anyRequest().authenticated(); // 나너지 요청들에 대해서는 인증을 받아야한다.
     }
 
     @Override

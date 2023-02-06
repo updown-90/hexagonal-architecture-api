@@ -2,13 +2,10 @@ package com.updown.api.account.infrastructure.repository;
 
 import com.updown.api.account.domain.AccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Lock;
 
-import javax.persistence.LockModeType;
-import java.util.List;
 import java.util.Optional;
 
-public interface AccountEntityRepository extends JpaRepository<AccountEntity, Long> {
+public interface AccountEntityRepository extends JpaRepository<AccountEntity, Long>, AccountEntityQueryDSLRepository {
 
     Optional<AccountEntity> findAccountById(Long id);
 

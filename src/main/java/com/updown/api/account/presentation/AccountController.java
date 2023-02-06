@@ -1,8 +1,13 @@
 package com.updown.api.account.presentation;
 
-import com.updown.api.account.domain.AccountEntity;
-import com.updown.api.account.presentation.dto.AccountSaveRequestDTO;
-import com.updown.api.account.presentation.dto.AccountUpdateRequestDTO;
+import com.updown.api.account.infrastructure.dto.AccountEntityQueryDSLDTO;
+import com.updown.api.account.presentation.dto.request.AccountSaveRequestDTO;
+import com.updown.api.account.presentation.dto.request.AccountUpdateRequestDTO;
+import com.updown.api.account.presentation.dto.request.AccountsFindRequestDTO;
+import com.updown.api.account.presentation.dto.response.AccountFindResponseDTO;
+import com.updown.api.account.presentation.dto.response.AccountSaveResponseDTO;
+import com.updown.api.account.presentation.dto.response.AccountUpdateResponseDTO;
+import com.updown.api.account.presentation.mapstruct.mapper.AccountEntityMapper;
 import com.updown.api.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,24 +22,31 @@ public class AccountController {
 
     private final AccountService accountService;
 
+//    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public AccountEntity createAccount(@RequestBody @Valid AccountSaveRequestDTO accountSaveRequestDTO) {
-        return accountService.createAccount(accountSaveRequestDTO);
+    public AccountSaveResponseDTO createAccount(@RequestBody @Valid AccountSaveRequestDTO accountSaveRequestDTO) {
+        return AccountEntityMapper.INSTANCE.accountEntityToAccountSaveResponseDTO(
+                accountService.createAccount(accountSaveRequestDTO)
+        );
     }
 
     @GetMapping
-    public List<AccountEntity> findAllAccount() {
-        return accountService.findAllAccount();
+    public List<AccountEntityQueryDSLDTO> findAccounts(AccountsFindRequestDTO accountsFindRequestDTO) {
+        return accountService.findAccounts(accountsFindRequestDTO);
     }
 
     @GetMapping("/{id}")
-    public AccountEntity findAccountById(@PathVariable Long id) {
-        return accountService.findAccountById(id);
+    public AccountFindResponseDTO findAccountById(@PathVariable Long id) {
+        return AccountEntityMapper.INSTANCE.accountEntityToAccountFindResponseDTO(
+                accountService.findAccountById(id)
+        );
     }
 
     @PutMapping
-    public AccountEntity updateAccount(@RequestBody AccountUpdateRequestDTO accountUpdateRequestDTO) {
-        return accountService.updateAccount(accountUpdateRequestDTO);
+    public AccountUpdateResponseDTO updateAccount(@RequestBody AccountUpdateRequestDTO accountUpdateRequestDTO) {
+        return AccountEntityMapper.INSTANCE.accountEntityToAccountUpdateResponseDTO(
+                accountService.updateAccount(accountUpdateRequestDTO)
+        );
     }
 
     @DeleteMapping("/{id}")

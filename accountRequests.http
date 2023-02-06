@@ -22,8 +22,7 @@ Content-Type: application/json
 
 {
   "id" : "1",
-  "accountName" : "testChangeAccountName4"
-
+  "changeAccountName" : "testChangeAccountName4"
 }
 
 ### 사용자 삭제

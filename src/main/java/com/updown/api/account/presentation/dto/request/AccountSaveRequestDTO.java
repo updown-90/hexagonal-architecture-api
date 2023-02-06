@@ -1,4 +1,4 @@
-package com.updown.api.account.presentation.dto;
+package com.updown.api.account.presentation.dto.request;
 
 import lombok.Getter;
 
