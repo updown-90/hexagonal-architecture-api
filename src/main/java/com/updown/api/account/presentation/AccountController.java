@@ -9,6 +9,7 @@ import com.updown.api.account.presentation.dto.response.AccountSaveResponseDTO;
 import com.updown.api.account.presentation.dto.response.AccountUpdateResponseDTO;
 import com.updown.api.account.presentation.mapstruct.mapper.AccountEntityMapper;
 import com.updown.api.account.service.AccountService;
+import com.updown.api.common.aop.Logger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ public class AccountController {
 
 //    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
+    @Logger
     public AccountSaveResponseDTO createAccount(@RequestBody @Valid AccountSaveRequestDTO accountSaveRequestDTO) {
         return AccountEntityMapper.INSTANCE.accountEntityToAccountSaveResponseDTO(
                 accountService.createAccount(accountSaveRequestDTO)
