@@ -3,6 +3,7 @@ package com.updown.api.account.presentation.dto.request;
 import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Getter
 public class AccountSaveRequestDTO {
@@ -15,5 +16,8 @@ public class AccountSaveRequestDTO {
 
     @NotEmpty
     private String accountName;
+
+    @NotNull
+    private Long departmentId;
 
 }

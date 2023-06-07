@@ -8,22 +8,24 @@ import com.updown.api.account.presentation.dto.request.AccountUpdateRequestDTO;
 import com.updown.api.account.presentation.dto.request.AccountsFindRequestDTO;
 import com.updown.api.common.exception.CustomRuntimeException;
 import com.updown.api.common.exception.ExceptionType;
+import com.updown.api.department.domain.DepartmentEntity;
+import com.updown.api.department.service.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService {
 
     private final AccountEntityRepository accountEntityRepository;
-
+    private final DepartmentRepository departmentRepository;
     public AccountEntity createAccount(AccountSaveRequestDTO accountSaveRequestDTO) {
+        DepartmentEntity departmentEntity = departmentRepository.findById(accountSaveRequestDTO.getDepartmentId()).get();
         return isEmptyDBLoginId(accountSaveRequestDTO) ?
-                accountEntityRepository.save(AccountEntity.create(accountSaveRequestDTO)) : null;
+                accountEntityRepository.save(AccountEntity.create(accountSaveRequestDTO, departmentEntity)) : null;
     }
 
     public AccountEntity findAccountById(Long id) {

@@ -1,0 +1,27 @@
+### 부서 등록
+POST localhost:8080/department
+Content-Type: application/json
+
+{
+  "name" : "부서명1"
+}
+
+### 부서 전체 조회
+GET localhost:8080/department
+Content-Type: application/json
+
+### 부서 조회
+GET localhost:8080/department/1
+Content-Type: application/json
+
+### 부서 수정
+PUT localhost:8080/department
+Content-Type: application/json
+
+{
+  "name" : "name"
+}
+
+### 부서 삭제
+DELETE localhost:8080/department/1
+Content-Type: application/json

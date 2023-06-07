@@ -1,6 +1,8 @@
 package com.updown.api.account.presentation;
 
+import com.updown.api.account.domain.AccountEntity;
 import com.updown.api.account.infrastructure.dto.AccountEntityQueryDSLDTO;
+import com.updown.api.account.infrastructure.repository.AccountEntityRepository;
 import com.updown.api.account.presentation.dto.request.AccountSaveRequestDTO;
 import com.updown.api.account.presentation.dto.request.AccountUpdateRequestDTO;
 import com.updown.api.account.presentation.dto.request.AccountsFindRequestDTO;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController // @ResponseBody 알아서 사용하게 해주려고 사용
 @RequiredArgsConstructor // @RequiredArgsConstructor는 초기화 되지않은 final 필드나, @NonNull 이 붙은 필드에 대해 생성자를 생성해 줍니다.

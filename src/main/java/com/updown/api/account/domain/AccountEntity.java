@@ -3,6 +3,7 @@ package com.updown.api.account.domain;
 import com.updown.api.account.presentation.dto.request.AccountSaveRequestDTO;
 import com.updown.api.account.presentation.dto.request.AccountUpdateRequestDTO;
 import com.updown.api.common.domain.BaseTimeEntity;
+import com.updown.api.department.domain.DepartmentEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,14 +51,18 @@ public class AccountEntity extends BaseTimeEntity {
     @Version
     private Long version;
 
+    @ManyToOne
+    private DepartmentEntity department;
+
     @Builder
-    public AccountEntity(String loginId, String password, String accountName) {
+    public AccountEntity(String loginId, String password, String accountName, DepartmentEntity departmentEntity) {
         this.loginId = loginId;
         this.password = password;
         this.accountName = accountName;
+        this.department = departmentEntity;
     }
 
-    public static AccountEntity create(AccountSaveRequestDTO accountSaveRequestDTO) {
+    public static AccountEntity create(AccountSaveRequestDTO accountSaveRequestDTO, DepartmentEntity departmentEntity) {
         // 해시 함수에는 MD5나 SHA 등의 종류가 있지만 BCrypt는 단순히 입력을 1회 해시시키는 것이 아니라 솔트(salt)를 부여하여 여러번 해싱하므로 더 안전하게 암호를 관리할 수 있다.
         // 그리고 스프링 시큐리티에서 기본으로 BCrypt 써서 이걸로 넣음
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -66,6 +71,7 @@ public class AccountEntity extends BaseTimeEntity {
                 loginId(accountSaveRequestDTO.getLoginId()).
                 accountName(accountSaveRequestDTO.getAccountName()).
                 password(passwordEncoder.encode(accountSaveRequestDTO.getPassword())).
+                departmentEntity(departmentEntity).
                 build();
     }
 

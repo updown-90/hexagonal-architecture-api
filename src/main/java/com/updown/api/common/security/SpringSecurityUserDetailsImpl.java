@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-// pring Security에서 제공하는 사용자 Interface로 UserDetails 가 있는데 이를 구현해 놓은 구현체로 User Class가 있다
+// spring Security에서 제공하는 사용자 Interface로 UserDetails 가 있는데 이를 구현해 놓은 구현체로 User Class가 있다
 // UserDetails Interface 를 직접 구현하거나 User Class를 확장해서 사용하면 된다.
 public class SpringSecurityUserDetailsImpl extends User {
 

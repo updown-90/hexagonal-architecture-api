@@ -1,0 +1,39 @@
+package com.updown.api.department.domain;
+
+import com.updown.api.account.domain.AccountEntity;
+import com.updown.api.common.domain.BaseTimeEntity;
+import com.updown.api.department.presentation.dto.request.DepartmentSaveRequestDTO;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Getter
+@Entity
+@NoArgsConstructor
+@Table(name = "department")
+public class DepartmentEntity extends BaseTimeEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true)
+    private String name;
+
+    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
+    private List<AccountEntity> accounts;
+
+    @Builder
+    public DepartmentEntity(String name) {
+        this.name = name;
+    }
+
+    public static DepartmentEntity create(DepartmentSaveRequestDTO departmentSaveRequestDTO) {
+        return DepartmentEntity.builder()
+                .name(departmentSaveRequestDTO.getName())
+                .build();
+    }
+}
