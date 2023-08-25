@@ -11,10 +11,10 @@ import com.updown.api.common.exception.ExceptionType;
 import com.updown.api.department.domain.DepartmentEntity;
 import com.updown.api.department.service.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,10 +22,17 @@ public class AccountService {
 
     private final AccountEntityRepository accountEntityRepository;
     private final DepartmentRepository departmentRepository;
+    private final PasswordEncoder passwordEncoder;
+
     public AccountEntity createAccount(AccountSaveRequestDTO accountSaveRequestDTO) {
         DepartmentEntity departmentEntity = departmentRepository.findById(accountSaveRequestDTO.getDepartmentId()).get();
+
+
+        AccountEntity entity = AccountEntity.create(accountSaveRequestDTO, departmentEntity);
+        entity.encodePassWord(passwordEncoder);
+
         return isEmptyDBLoginId(accountSaveRequestDTO) ?
-                accountEntityRepository.save(AccountEntity.create(accountSaveRequestDTO, departmentEntity)) : null;
+                accountEntityRepository.save(entity) : null;
     }
 
     public AccountEntity findAccountById(Long id) {

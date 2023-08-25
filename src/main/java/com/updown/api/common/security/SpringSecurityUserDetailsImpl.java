@@ -2,6 +2,7 @@ package com.updown.api.common.security;
 
 import com.updown.api.account.domain.AccountEntity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class SpringSecurityUserDetailsImpl extends User {
 //        } else {
 //            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 //        }
+        // Spring Security가 앞에 ROLE_ 붙여야 인식됨
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         return authorities;
     }
 

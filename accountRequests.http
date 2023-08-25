@@ -3,10 +3,10 @@ POST localhost:8080/account
 Content-Type: application/json
 
 {
-  "loginId" : "testLoginId8",
+  "loginId" : "testLoginId1",
   "password" : "testPassword1",
   "accountName" : "testAccountName1",
-  "departmentId" : 3
+  "departmentId" : 1
 }
 
 ### 사용자 전체 조회
