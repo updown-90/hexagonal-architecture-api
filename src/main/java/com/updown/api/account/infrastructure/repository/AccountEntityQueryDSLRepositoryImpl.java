@@ -12,10 +12,13 @@ import java.util.List;
 import static com.updown.api.account.domain.QAccountEntity.accountEntity;
 
 
-@RequiredArgsConstructor
 public class AccountEntityQueryDSLRepositoryImpl implements AccountEntityQueryDSLRepository{
 
     private final JPAQueryFactory queryFactory;
+
+    public AccountEntityQueryDSLRepositoryImpl(EntityManager entityManager) {
+        this.queryFactory = new JPAQueryFactory(entityManager);
+    }
 
     @Override
     public List<AccountEntityQueryDSLDTO> findAccounts(AccountsFindRequestDTO accountsFindRequestDTO) {
