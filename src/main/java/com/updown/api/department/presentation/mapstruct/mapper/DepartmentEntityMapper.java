@@ -2,7 +2,7 @@ package com.updown.api.department.presentation.mapstruct.mapper;
 
 
 import com.updown.api.department.domain.DepartmentEntity;
-import com.updown.api.department.presentation.dto.response.DepartmentFindResponseDTO;
+import com.updown.api.department.presentation.dto.response.DepartmentFindResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -13,7 +13,7 @@ public interface DepartmentEntityMapper {
 
     DepartmentEntityMapper INSTANCE = Mappers.getMapper(DepartmentEntityMapper.class);
 
-    DepartmentFindResponseDTO departmentEntityToDepartmentFindResponseDTO(DepartmentEntity departmentEntity);
-    List<DepartmentFindResponseDTO> departmentEntityToDepartmentFindResponseDTO(List<DepartmentEntity> departmentEntity);
+    DepartmentFindResponse departmentEntityToDepartmentFindResponseDTO(DepartmentEntity departmentEntity);
+    List<DepartmentFindResponse> departmentEntityToDepartmentFindResponseDTO(List<DepartmentEntity> departmentEntity);
 
 }

@@ -6,7 +6,7 @@ import lombok.Getter;
 // @Getter랑 @Builder 있어야 MapStruct 값 매핑 동작 가능
 @Getter
 @Builder
-public class AccountUpdateResponseDTO {
+public class AccountFindResponse {
 
     private String loginId;
 

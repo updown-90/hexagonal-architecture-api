@@ -22,7 +22,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(String loginId, String password) {
-        AccountEntity accountEntity = accountEntityRepository.findAccountByLoginId(loginId)
+        var accountEntity = accountEntityRepository.findAccountByLoginId(loginId)
                 .orElseThrow(() -> new CustomRuntimeException(ExceptionType.NOT_FOUND_USER));
 
         if (!passwordEncoder.matches(password, accountEntity.getPassword())) {

@@ -40,9 +40,9 @@ public class JwtProvider {
 
     // 토큰 생성
     public String createToken(String account, List<String> roles) {
-        Claims claims = Jwts.claims().setSubject(account);
+        var claims = Jwts.claims().setSubject(account);
         claims.put("roles", roles);
-        Date now = new Date();
+        var now = new Date();
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
@@ -54,7 +54,7 @@ public class JwtProvider {
     // 권한정보 획득
     // Spring Security 인증과정에서 권한확인을 위한 기능
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getAccount(token));
+        var userDetails = userDetailsService.loadUserByUsername(this.getAccount(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 

@@ -2,14 +2,13 @@ package com.updown.api.account.service;
 
 import com.updown.api.account.domain.AccountEntity;
 import com.updown.api.account.domain.AccountStatus;
-import com.updown.api.account.infrastructure.dto.AccountEntityQueryDSLDTO;
+import com.updown.api.account.infrastructure.dto.AccountEntityQueryDSLResponse;
 import com.updown.api.account.infrastructure.repository.AccountEntityRepository;
-import com.updown.api.account.presentation.dto.request.AccountSaveRequestDTO;
-import com.updown.api.account.presentation.dto.request.AccountUpdateRequestDTO;
-import com.updown.api.account.presentation.dto.request.AccountsFindRequestDTO;
+import com.updown.api.account.presentation.dto.request.AccountSaveRequest;
+import com.updown.api.account.presentation.dto.request.AccountUpdateRequest;
+import com.updown.api.account.presentation.dto.request.AccountsFindRequest;
 import com.updown.api.common.exception.CustomRuntimeException;
 import com.updown.api.common.exception.ExceptionType;
-import com.updown.api.department.domain.DepartmentEntity;
 import com.updown.api.department.service.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,19 +24,19 @@ public class AccountService {
     private final DepartmentRepository departmentRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public AccountEntity createAccount(AccountSaveRequestDTO accountSaveRequestDTO) {
-        DepartmentEntity departmentEntity = departmentRepository.findById(accountSaveRequestDTO.getDepartmentId()).get();
+    public AccountEntity createAccount(AccountSaveRequest accountSaveRequest) {
+        var departmentEntity = departmentRepository.findById(accountSaveRequest.getDepartmentId()).get();
 
 
-        AccountEntity entity = AccountEntity.create(accountSaveRequestDTO, departmentEntity);
+        var entity = AccountEntity.create(accountSaveRequest, departmentEntity);
         entity.encodePassWord(passwordEncoder);
 
-        return isEmptyDBLoginId(accountSaveRequestDTO) ?
+        return isEmptyDBLoginId(accountSaveRequest) ?
                 accountEntityRepository.save(entity) : null;
     }
 
     public AccountEntity findAccountById(Long id) {
-        AccountEntity accountEntity = accountEntityRepository.findAccountById(id)
+        var accountEntity = accountEntityRepository.findAccountById(id)
                 .orElseThrow(() -> new CustomRuntimeException(ExceptionType.NOT_FOUND_USER));
 
 //      enum 사용시 비교는 등호연산자( == ) 를 활용하시는 것을 추천합니다.
@@ -51,15 +50,15 @@ public class AccountService {
         return accountEntity;
     }
 
-    public List<AccountEntityQueryDSLDTO> findAccounts(AccountsFindRequestDTO accountsFindRequestDTO) {
-        return accountEntityRepository.findAccounts(accountsFindRequestDTO);
+    public List<AccountEntityQueryDSLResponse> findAccounts(AccountsFindRequest accountsFindRequest) {
+        return accountEntityRepository.findAccounts(accountsFindRequest);
     }
 
-    public AccountEntity updateAccount(AccountUpdateRequestDTO accountUpdateRequestDTO) {
-        AccountEntity accountEntity = accountEntityRepository.findById(accountUpdateRequestDTO.getId())
+    public AccountEntity updateAccount(AccountUpdateRequest accountUpdateRequest) {
+        var accountEntity = accountEntityRepository.findById(accountUpdateRequest.getId())
                 .orElseThrow(() -> new CustomRuntimeException(ExceptionType.NOT_FOUND_USER));
 
-        accountEntity.update(accountUpdateRequestDTO);
+        accountEntity.update(accountUpdateRequest);
         return accountEntityRepository.save(accountEntity);
     }
 
@@ -67,8 +66,8 @@ public class AccountService {
         accountEntityRepository.deleteById(id);
     }
 
-    private boolean isEmptyDBLoginId(AccountSaveRequestDTO accountSaveRequestDTO) {
-        accountEntityRepository.findAccountByLoginId(accountSaveRequestDTO.getLoginId())
+    private boolean isEmptyDBLoginId(AccountSaveRequest accountSaveRequest) {
+        accountEntityRepository.findAccountByLoginId(accountSaveRequest.getLoginId())
                 .ifPresent(accountEntity -> {   // ifPresent()는 Optional 객체가 값을 가지고 있으면 실행 값이 없으면 넘어감
                     throw new CustomRuntimeException(ExceptionType.NOT_FOUND_USER);
                 });

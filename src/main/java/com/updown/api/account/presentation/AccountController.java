@@ -1,23 +1,19 @@
 package com.updown.api.account.presentation;
 
-import com.updown.api.account.domain.AccountEntity;
-import com.updown.api.account.infrastructure.dto.AccountEntityQueryDSLDTO;
-import com.updown.api.account.infrastructure.repository.AccountEntityRepository;
-import com.updown.api.account.presentation.dto.request.AccountSaveRequestDTO;
-import com.updown.api.account.presentation.dto.request.AccountUpdateRequestDTO;
-import com.updown.api.account.presentation.dto.request.AccountsFindRequestDTO;
-import com.updown.api.account.presentation.dto.response.AccountFindResponseDTO;
-import com.updown.api.account.presentation.dto.response.AccountSaveResponseDTO;
-import com.updown.api.account.presentation.dto.response.AccountUpdateResponseDTO;
+import com.updown.api.account.infrastructure.dto.AccountEntityQueryDSLResponse;
+import com.updown.api.account.presentation.dto.request.AccountSaveRequest;
+import com.updown.api.account.presentation.dto.request.AccountUpdateRequest;
+import com.updown.api.account.presentation.dto.request.AccountsFindRequest;
+import com.updown.api.account.presentation.dto.response.AccountFindResponse;
+import com.updown.api.account.presentation.dto.response.AccountSaveResponse;
+import com.updown.api.account.presentation.dto.response.AccountUpdateResponse;
 import com.updown.api.account.presentation.mapstruct.mapper.AccountEntityMapper;
 import com.updown.api.account.service.AccountService;
-import com.updown.api.common.aop.Logger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController // @ResponseBody 알아서 사용하게 해주려고 사용
 @RequiredArgsConstructor // @RequiredArgsConstructor는 초기화 되지않은 final 필드나, @NonNull 이 붙은 필드에 대해 생성자를 생성해 줍니다.
@@ -29,28 +25,28 @@ public class AccountController {
 //    @ResponseStatus(HttpStatus.CREATED)
 //    @Logger 해당 어노테이션이 있으면 AOP 동작하도록 개발되어 있음
     @PostMapping
-    public AccountSaveResponseDTO createAccount(@RequestBody @Valid AccountSaveRequestDTO accountSaveRequestDTO) {
+    public AccountSaveResponse createAccount(@RequestBody @Valid AccountSaveRequest accountSaveRequest) {
         return AccountEntityMapper.INSTANCE.accountEntityToAccountSaveResponseDTO(
-                accountService.createAccount(accountSaveRequestDTO)
+                accountService.createAccount(accountSaveRequest)
         );
     }
 
     @GetMapping
-    public List<AccountEntityQueryDSLDTO> findAccounts(AccountsFindRequestDTO accountsFindRequestDTO) {
-        return accountService.findAccounts(accountsFindRequestDTO);
+    public List<AccountEntityQueryDSLResponse> findAccounts(AccountsFindRequest accountsFindRequest) {
+        return accountService.findAccounts(accountsFindRequest);
     }
 
     @GetMapping("/{id}")
-    public AccountFindResponseDTO findAccountById(@PathVariable Long id) {
+    public AccountFindResponse findAccountById(@PathVariable Long id) {
         return AccountEntityMapper.INSTANCE.accountEntityToAccountFindResponseDTO(
                 accountService.findAccountById(id)
         );
     }
 
     @PutMapping
-    public AccountUpdateResponseDTO updateAccount(@RequestBody AccountUpdateRequestDTO accountUpdateRequestDTO) {
+    public AccountUpdateResponse updateAccount(@RequestBody AccountUpdateRequest accountUpdateRequest) {
         return AccountEntityMapper.INSTANCE.accountEntityToAccountUpdateResponseDTO(
-                accountService.updateAccount(accountUpdateRequestDTO)
+                accountService.updateAccount(accountUpdateRequest)
         );
     }
 

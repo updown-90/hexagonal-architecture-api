@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class DepartmentSaveResponseDTO {
+public class DepartmentFindResponse {
 
     private Long id;
 

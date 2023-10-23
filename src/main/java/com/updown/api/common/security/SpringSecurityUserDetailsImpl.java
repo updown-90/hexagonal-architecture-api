@@ -18,7 +18,7 @@ public class SpringSecurityUserDetailsImpl extends User {
     }
 
     private static Collection<? extends GrantedAuthority> authorities(AccountEntity accountEntity) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
+        var authorities = new ArrayList<GrantedAuthority>();
 //        if (accountEntity.isAdmin()) {
 //            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 //        } else {

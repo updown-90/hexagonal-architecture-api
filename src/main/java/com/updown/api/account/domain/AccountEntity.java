@@ -1,8 +1,7 @@
 package com.updown.api.account.domain;
 
-import com.updown.api.account.presentation.dto.request.AccountSaveRequestDTO;
-import com.updown.api.account.presentation.dto.request.AccountUpdateRequestDTO;
-import com.updown.api.account.service.AccountService;
+import com.updown.api.account.presentation.dto.request.AccountSaveRequest;
+import com.updown.api.account.presentation.dto.request.AccountUpdateRequest;
 import com.updown.api.common.domain.BaseTimeEntity;
 import com.updown.api.department.domain.DepartmentEntity;
 import lombok.Builder;
@@ -66,18 +65,18 @@ public class AccountEntity extends BaseTimeEntity {
         this.department = departmentEntity;
     }
 
-    public static AccountEntity create(AccountSaveRequestDTO accountSaveRequestDTO, DepartmentEntity departmentEntity) {
+    public static AccountEntity create(AccountSaveRequest accountSaveRequest, DepartmentEntity departmentEntity) {
         return AccountEntity.builder().
-                loginId(accountSaveRequestDTO.getLoginId()).
-                accountName(accountSaveRequestDTO.getAccountName()).
-                password(accountSaveRequestDTO.getPassword()).
+                loginId(accountSaveRequest.getLoginId()).
+                accountName(accountSaveRequest.getAccountName()).
+                password(accountSaveRequest.getPassword()).
                 accountStatus(AccountStatus.NORMAL).
                 departmentEntity(departmentEntity).
                 build();
     }
 
-    public void update(AccountUpdateRequestDTO accountUpdateRequestDTO) {
-        this.accountName = accountUpdateRequestDTO.getChangeAccountName();
+    public void update(AccountUpdateRequest accountUpdateRequest) {
+        this.accountName = accountUpdateRequest.getChangeAccountName();
     }
 
     public void encodePassWord(PasswordEncoder passwordEncoder) {

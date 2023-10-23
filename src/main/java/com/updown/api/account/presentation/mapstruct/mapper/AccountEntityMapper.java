@@ -2,9 +2,9 @@ package com.updown.api.account.presentation.mapstruct.mapper;
 
 
 import com.updown.api.account.domain.AccountEntity;
-import com.updown.api.account.presentation.dto.response.AccountFindResponseDTO;
-import com.updown.api.account.presentation.dto.response.AccountSaveResponseDTO;
-import com.updown.api.account.presentation.dto.response.AccountUpdateResponseDTO;
+import com.updown.api.account.presentation.dto.response.AccountFindResponse;
+import com.updown.api.account.presentation.dto.response.AccountSaveResponse;
+import com.updown.api.account.presentation.dto.response.AccountUpdateResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -13,8 +13,8 @@ public interface AccountEntityMapper {
 
     AccountEntityMapper INSTANCE = Mappers.getMapper(AccountEntityMapper.class);
 
-    AccountSaveResponseDTO accountEntityToAccountSaveResponseDTO(AccountEntity accountEntity);
-    AccountFindResponseDTO accountEntityToAccountFindResponseDTO(AccountEntity accountEntity);
-    AccountUpdateResponseDTO accountEntityToAccountUpdateResponseDTO(AccountEntity accountEntity);
+    AccountSaveResponse accountEntityToAccountSaveResponseDTO(AccountEntity accountEntity);
+    AccountFindResponse accountEntityToAccountFindResponseDTO(AccountEntity accountEntity);
+    AccountUpdateResponse accountEntityToAccountUpdateResponseDTO(AccountEntity accountEntity);
 
 }

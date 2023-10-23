@@ -1,7 +1,7 @@
 package com.updown.api.department.presentation;
 
-import com.updown.api.department.presentation.dto.request.DepartmentSaveRequestDTO;
-import com.updown.api.department.presentation.dto.response.DepartmentFindResponseDTO;
+import com.updown.api.department.presentation.dto.request.DepartmentSaveRequest;
+import com.updown.api.department.presentation.dto.response.DepartmentFindResponse;
 import com.updown.api.department.presentation.mapstruct.mapper.DepartmentEntityMapper;
 import com.updown.api.department.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +19,14 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     @PostMapping
-    public DepartmentFindResponseDTO createDepartment(@RequestBody @Valid DepartmentSaveRequestDTO departmentSaveRequestDTO) {
+    public DepartmentFindResponse createDepartment(@RequestBody @Valid DepartmentSaveRequest departmentSaveRequest) {
         return DepartmentEntityMapper.INSTANCE.departmentEntityToDepartmentFindResponseDTO(
-            departmentService.createDepartment(departmentSaveRequestDTO)
+            departmentService.createDepartment(departmentSaveRequest)
         );
     }
 
     @GetMapping
-    public List<DepartmentFindResponseDTO> findAccounts() {
+    public List<DepartmentFindResponse> findAccounts() {
         return DepartmentEntityMapper.INSTANCE.departmentEntityToDepartmentFindResponseDTO(
                 departmentService.findAll()
         );

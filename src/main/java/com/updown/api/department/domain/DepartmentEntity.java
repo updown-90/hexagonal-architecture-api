@@ -2,7 +2,7 @@ package com.updown.api.department.domain;
 
 import com.updown.api.account.domain.AccountEntity;
 import com.updown.api.common.domain.BaseTimeEntity;
-import com.updown.api.department.presentation.dto.request.DepartmentSaveRequestDTO;
+import com.updown.api.department.presentation.dto.request.DepartmentSaveRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,9 +31,9 @@ public class DepartmentEntity extends BaseTimeEntity {
         this.name = name;
     }
 
-    public static DepartmentEntity create(DepartmentSaveRequestDTO departmentSaveRequestDTO) {
+    public static DepartmentEntity create(DepartmentSaveRequest departmentSaveRequest) {
         return DepartmentEntity.builder()
-                .name(departmentSaveRequestDTO.getName())
+                .name(departmentSaveRequest.getName())
                 .build();
     }
 }

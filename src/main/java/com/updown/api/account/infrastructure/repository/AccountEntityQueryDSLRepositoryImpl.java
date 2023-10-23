@@ -1,10 +1,9 @@
 package com.updown.api.account.infrastructure.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.updown.api.account.infrastructure.dto.AccountEntityQueryDSLDTO;
+import com.updown.api.account.infrastructure.dto.AccountEntityQueryDSLResponse;
 import com.updown.api.account.infrastructure.dto.QAccountEntityQueryDSLDTO;
-import com.updown.api.account.presentation.dto.request.AccountsFindRequestDTO;
-import lombok.RequiredArgsConstructor;
+import com.updown.api.account.presentation.dto.request.AccountsFindRequest;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -21,7 +20,7 @@ public class AccountEntityQueryDSLRepositoryImpl implements AccountEntityQueryDS
     }
 
     @Override
-    public List<AccountEntityQueryDSLDTO> findAccounts(AccountsFindRequestDTO accountsFindRequestDTO) {
+    public List<AccountEntityQueryDSLResponse> findAccounts(AccountsFindRequest accountsFindRequest) {
         return queryFactory.select(new QAccountEntityQueryDSLDTO(
                 accountEntity.loginId,
                 accountEntity.accountName)

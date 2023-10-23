@@ -1,7 +1,7 @@
 package com.updown.api.department.service;
 
 import com.updown.api.department.domain.DepartmentEntity;
-import com.updown.api.department.presentation.dto.request.DepartmentSaveRequestDTO;
+import com.updown.api.department.presentation.dto.request.DepartmentSaveRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +14,12 @@ public class DepartmentService {
     private final DepartmentRepository departmentRepository;
 
     public List<DepartmentEntity> findAll() {
-        List<DepartmentEntity> all = departmentRepository.findAll();
-
-        return all;
+        return departmentRepository.findAll();
     }
 
-    public DepartmentEntity createDepartment(DepartmentSaveRequestDTO departmentSaveRequestDTO) {
+    public DepartmentEntity createDepartment(DepartmentSaveRequest departmentSaveRequest) {
         return departmentRepository.save(
-                DepartmentEntity.create(departmentSaveRequestDTO)
+                DepartmentEntity.create(departmentSaveRequest)
         );
     }
 }

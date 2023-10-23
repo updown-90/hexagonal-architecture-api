@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Getter
-public class AccountSaveRequestDTO {
+public class AccountSaveRequest {
 
     @NotEmpty
     private String loginId;
