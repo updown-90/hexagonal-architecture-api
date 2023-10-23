@@ -2,6 +2,7 @@ package com.updown.api.account.domain;
 
 import com.updown.api.account.presentation.dto.request.AccountSaveRequestDTO;
 import com.updown.api.account.presentation.dto.request.AccountUpdateRequestDTO;
+import com.updown.api.account.service.AccountService;
 import com.updown.api.common.domain.BaseTimeEntity;
 import com.updown.api.department.domain.DepartmentEntity;
 import lombok.Builder;
@@ -33,6 +34,9 @@ public class AccountEntity extends BaseTimeEntity {
 
     private String accountName;
 
+    @Enumerated(value = EnumType.STRING)
+    private AccountStatus accountStatus;
+
     // 낙관적 잠금(Optimisstic Lock)은 현실적으로 데이터 갱신시 경합이 발생하지 않을 것이라고 낙관적으로 보고 잠금을 거는 기법입니다.
     // 예를 들어 회원정보에 대한 갱신은 보통 해당 회원에 의해서 이루어지므로 동시에 여러 요청이 발생할 가능성이 낮습니다.
     // 따라서 동시에 수정이 이루어진 경우를 감지해서 예외를 발생시켜도 실제로 예외가 발생할 가능성이 낮다고 낙관적으로 보는 것입니다.
@@ -54,10 +58,11 @@ public class AccountEntity extends BaseTimeEntity {
     private DepartmentEntity department;
 
     @Builder
-    public AccountEntity(String loginId, String password, String accountName, DepartmentEntity departmentEntity) {
+    public AccountEntity(String loginId, String password, String accountName, AccountStatus accountStatus, DepartmentEntity departmentEntity) {
         this.loginId = loginId;
         this.password = password;
         this.accountName = accountName;
+        this.accountStatus = accountStatus;
         this.department = departmentEntity;
     }
 
@@ -66,6 +71,7 @@ public class AccountEntity extends BaseTimeEntity {
                 loginId(accountSaveRequestDTO.getLoginId()).
                 accountName(accountSaveRequestDTO.getAccountName()).
                 password(accountSaveRequestDTO.getPassword()).
+                accountStatus(AccountStatus.NORMAL).
                 departmentEntity(departmentEntity).
                 build();
     }
