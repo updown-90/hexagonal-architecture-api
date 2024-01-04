@@ -3,11 +3,11 @@ package com.updown.api.department.domain;
 import com.updown.api.account.domain.AccountEntity;
 import com.updown.api.common.domain.BaseTimeEntity;
 import com.updown.api.department.presentation.dto.request.DepartmentSaveRequest;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Getter

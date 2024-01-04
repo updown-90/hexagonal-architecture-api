@@ -4,12 +4,12 @@ import com.updown.api.account.presentation.dto.request.AccountSaveRequest;
 import com.updown.api.account.presentation.dto.request.AccountUpdateRequest;
 import com.updown.api.common.domain.BaseTimeEntity;
 import com.updown.api.department.domain.DepartmentEntity;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.*;
 
 @Getter
 @Entity

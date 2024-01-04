@@ -1,5 +1,5 @@
 ### 사용자 등록
-POST localhost:8080/account
+POST localhost:8080/accounts
 Content-Type: application/json
 
 {
@@ -10,15 +10,15 @@ Content-Type: application/json
 }
 
 ### 사용자 전체 조회
-GET localhost:8080/account
+GET localhost:8080/accounts
 Content-Type: application/json
 
 ### 사용자 조회
-GET localhost:8080/account/1
+GET localhost:8080/accounts/1
 Content-Type: application/json
 
 ### 사용자 수정
-PUT localhost:8080/account
+PUT localhost:8080/accounts
 Content-Type: application/json
 
 {
@@ -27,5 +27,5 @@ Content-Type: application/json
 }
 
 ### 사용자 삭제
-DELETE localhost:8080/account/1
+DELETE localhost:8080/accounts/1
 Content-Type: application/json

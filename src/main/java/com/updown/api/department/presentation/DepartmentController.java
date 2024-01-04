@@ -4,16 +4,16 @@ import com.updown.api.department.presentation.dto.request.DepartmentSaveRequest;
 import com.updown.api.department.presentation.dto.response.DepartmentFindResponse;
 import com.updown.api.department.presentation.mapstruct.mapper.DepartmentEntityMapper;
 import com.updown.api.department.service.DepartmentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 
 @RestController // @ResponseBody 알아서 사용하게 해주려고 사용
 @RequiredArgsConstructor // @RequiredArgsConstructor는 초기화 되지않은 final 필드나, @NonNull 이 붙은 필드에 대해 생성자를 생성해 줍니다.
-@RequestMapping("/department")
+@RequestMapping("/departments")
 public class DepartmentController {
 
     private final DepartmentService departmentService;
