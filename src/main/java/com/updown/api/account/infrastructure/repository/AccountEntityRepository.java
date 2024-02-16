@@ -1,8 +1,10 @@
 package com.updown.api.account.infrastructure.repository;
 
 import com.updown.api.account.domain.AccountEntity;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AccountEntityRepository extends JpaRepository<AccountEntity, Long>, AccountEntityQueryDSLRepository {
@@ -21,4 +23,7 @@ public interface AccountEntityRepository extends JpaRepository<AccountEntity, Lo
 
     //  @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     Optional<AccountEntity> findAccountByLoginId(String loginId);
+
+    @Cacheable(value = "accountEntity")
+    List<AccountEntity> findAll();
 }
