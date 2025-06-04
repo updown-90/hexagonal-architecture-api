@@ -23,3 +23,14 @@ spring:
 jwt:
   secret:
     key: x!A%D*G-KaPdSgVkYp3s5v8y/B?E(H+M
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      testCircuitBreaker:
+        registerHealthIndicator: true         # Actuator 헬스체크에 CircuitBreaker 상태 노출
+        slidingWindowSize: 5                  # 최근 5번의 호출 기준으로 실패율 계산
+        minimumNumberOfCalls: 5               # 최소 5번 호출이 일어나야 실패율 평가 시작
+        failureRateThreshold: 50              # 실패율이 50% 이상이면 서킷을 연다
+        waitDurationInOpenState: 5s           # OPEN 상태 유지 시간 (5초 후 HALF-OPEN으로)
+        permittedNumberOfCallsInHalfOpenState: 3  # HALF-OPEN 상태에서 테스트할 호출 수
