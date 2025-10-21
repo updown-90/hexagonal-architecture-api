@@ -14,7 +14,7 @@ import java.util.List;
 public class SpringSecurityUserDetailsImpl extends User {
 
     public SpringSecurityUserDetailsImpl(AccountEntity accountEntity) {
-        super(accountEntity.getLoginId(), accountEntity.getPassword(), authorities(accountEntity));
+        super(accountEntity.getLoginId().getValue(), accountEntity.getPassword().getEncryptedValue(), authorities(accountEntity));
     }
 
     private static Collection<? extends GrantedAuthority> authorities(AccountEntity accountEntity) {

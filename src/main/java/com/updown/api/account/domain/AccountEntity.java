@@ -1,5 +1,8 @@
 package com.updown.api.account.domain;
 
+import com.updown.api.account.domain.value.AccountName;
+import com.updown.api.account.domain.value.LoginId;
+import com.updown.api.account.domain.value.Password;
 import com.updown.api.account.presentation.dto.request.AccountSaveRequest;
 import com.updown.api.account.presentation.dto.request.AccountUpdateRequest;
 import com.updown.api.common.domain.BaseTimeEntity;
@@ -8,7 +11,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Getter
@@ -24,14 +26,18 @@ public class AccountEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     //  해당 값을 유니크하게 DB에서 관리할 수 있도록 해준다.
     //  처음 insert 할 때 동시성 제어도 가능하다.
+    @Embedded
     @Column(unique = true)
-    private String loginId;
+    private LoginId loginId;
 
-    private String password;
+    @Embedded
+    private Password password;
 
-    private String accountName;
+    @Embedded
+    private AccountName accountName;
 
     @Enumerated(value = EnumType.STRING)
     private AccountStatus accountStatus;
@@ -57,7 +63,7 @@ public class AccountEntity extends BaseTimeEntity {
     private DepartmentEntity department;
 
     @Builder
-    public AccountEntity(String loginId, String password, String accountName, AccountStatus accountStatus, DepartmentEntity departmentEntity) {
+    public AccountEntity(LoginId loginId, Password password, AccountName accountName, AccountStatus accountStatus, DepartmentEntity departmentEntity) {
         this.loginId = loginId;
         this.password = password;
         this.accountName = accountName;
@@ -67,19 +73,15 @@ public class AccountEntity extends BaseTimeEntity {
 
     public static AccountEntity create(AccountSaveRequest accountSaveRequest, DepartmentEntity departmentEntity) {
         return AccountEntity.builder().
-                loginId(accountSaveRequest.getLoginId()).
-                accountName(accountSaveRequest.getAccountName()).
-                password(accountSaveRequest.getPassword()).
+                loginId(LoginId.of(accountSaveRequest.getLoginId())).
+                accountName(AccountName.of(accountSaveRequest.getAccountName())).
+                password(Password.of(accountSaveRequest.getPassword())).
                 accountStatus(AccountStatus.NORMAL).
                 departmentEntity(departmentEntity).
                 build();
     }
 
     public void update(AccountUpdateRequest accountUpdateRequest) {
-        this.accountName = accountUpdateRequest.getChangeAccountName();
-    }
-
-    public void encodePassWord(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(this.password);
+        this.accountName = AccountName.of(accountUpdateRequest.getChangeAccountName());
     }
 }

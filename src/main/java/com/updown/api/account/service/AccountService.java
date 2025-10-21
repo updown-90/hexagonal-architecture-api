@@ -2,6 +2,7 @@ package com.updown.api.account.service;
 
 import com.updown.api.account.domain.AccountEntity;
 import com.updown.api.account.domain.AccountStatus;
+import com.updown.api.account.domain.value.LoginId;
 import com.updown.api.account.infrastructure.dto.AccountEntityQueryDSLResponse;
 import com.updown.api.account.infrastructure.repository.AccountEntityRepository;
 import com.updown.api.account.presentation.dto.request.AccountSaveRequest;
@@ -11,7 +12,6 @@ import com.updown.api.common.exception.CustomRuntimeException;
 import com.updown.api.common.exception.ExceptionType;
 import com.updown.api.department.service.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,14 +22,11 @@ public class AccountService {
 
     private final AccountEntityRepository accountEntityRepository;
     private final DepartmentRepository departmentRepository;
-    private final PasswordEncoder passwordEncoder;
 
     public AccountEntity createAccount(AccountSaveRequest accountSaveRequest) {
         var departmentEntity = departmentRepository.findById(accountSaveRequest.getDepartmentId()).get();
 
-
         var entity = AccountEntity.create(accountSaveRequest, departmentEntity);
-        entity.encodePassWord(passwordEncoder);
 
         return isEmptyDBLoginId(accountSaveRequest) ?
                 accountEntityRepository.save(entity) : null;
@@ -67,7 +64,7 @@ public class AccountService {
     }
 
     private boolean isEmptyDBLoginId(AccountSaveRequest accountSaveRequest) {
-        accountEntityRepository.findAccountByLoginId(accountSaveRequest.getLoginId())
+        accountEntityRepository.findAccountByLoginId(LoginId.of(accountSaveRequest.getLoginId()))
                 .ifPresent(accountEntity -> {   // ifPresent()는 Optional 객체가 값을 가지고 있으면 실행 값이 없으면 넘어감
                     throw new CustomRuntimeException(ExceptionType.NOT_FOUND_USER);
                 });

@@ -22,7 +22,7 @@ public class AccountEntityQueryDSLRepositoryImpl extends QuerydslRepositorySuppo
   public List<AccountEntityQueryDSLResponse> findAccounts(AccountsFindRequest accountsFindRequest) {
     return getQuerydsl().createQuery()
         .select(
-            new QAccountEntityQueryDSLResponse(accountEntity.loginId, accountEntity.accountName))
+            new QAccountEntityQueryDSLResponse(accountEntity.loginId.value, accountEntity.accountName.value))
         .from(accountEntity)
         .fetch();
   }

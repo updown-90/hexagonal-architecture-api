@@ -1,6 +1,7 @@
 package com.updown.api.account.infrastructure.repository;
 
 import com.updown.api.account.domain.AccountEntity;
+import com.updown.api.account.domain.value.LoginId;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -22,7 +23,7 @@ public interface AccountEntityRepository extends JpaRepository<AccountEntity, Lo
     //  좀 더 딱딱한 표현으로는 동시성 제어를 위하여 특정 데이터(ROW)에 대해 베타적 LOCK을 거는 기능입니다.
 
     //  @Lock(value = LockModeType.PESSIMISTIC_WRITE)
-    Optional<AccountEntity> findAccountByLoginId(String loginId);
+    Optional<AccountEntity> findAccountByLoginId(LoginId loginId);
 
     @Cacheable(value = "accountEntity")
     List<AccountEntity> findAll();
