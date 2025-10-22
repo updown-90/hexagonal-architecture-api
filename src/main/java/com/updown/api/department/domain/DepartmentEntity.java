@@ -3,6 +3,7 @@ package com.updown.api.department.domain;
 import com.updown.api.account.domain.AccountEntity;
 import com.updown.api.common.domain.BaseTimeEntity;
 import com.updown.api.department.presentation.dto.request.DepartmentSaveRequest;
+import com.updown.api.department.presentation.dto.request.DepartmentUpdateRequest;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,5 +36,9 @@ public class DepartmentEntity extends BaseTimeEntity {
         return DepartmentEntity.builder()
                 .name(departmentSaveRequest.getName())
                 .build();
+    }
+
+    public void update(DepartmentUpdateRequest departmentUpdateRequest) {
+        this.name = departmentUpdateRequest.getName();
     }
 }

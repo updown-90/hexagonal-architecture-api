@@ -30,14 +30,20 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers(HttpMethod.POST, "/accounts").permitAll()
-                                .requestMatchers(HttpMethod.POST,"/departments").permitAll()
+                                // 모든 요청 허용 (테스트용)
+                                .anyRequest().permitAll()
+                                
+                                // 기존 설정 (주석 처리)
+                                /*
+                                .requestMatchers("/accounts").permitAll()
+                                .requestMatchers("/departments").permitAll()
                                 .requestMatchers("/login", "/", "/h2-console/**", "/account/create").permitAll()
                                 .requestMatchers("/test").hasRole("USER")
                                 .anyRequest().denyAll()
-                )
-                // JWT 인증 필터 적용
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+                                */
+                );
+                // JWT 인증 필터 적용 (테스트용으로 주석 처리)
+                // .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

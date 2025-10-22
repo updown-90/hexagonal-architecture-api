@@ -1,11 +1,9 @@
 package com.updown.api.account.infrastructure.repository;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.updown.api.account.domain.AccountEntity;
 import com.updown.api.account.infrastructure.dto.AccountEntityQueryDSLResponse;
 import com.updown.api.account.infrastructure.dto.QAccountEntityQueryDSLResponse;
 import com.updown.api.account.presentation.dto.request.AccountsFindRequest;
-import jakarta.persistence.EntityManager;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.List;

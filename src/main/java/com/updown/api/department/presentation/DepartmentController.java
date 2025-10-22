@@ -1,6 +1,7 @@
 package com.updown.api.department.presentation;
 
 import com.updown.api.department.presentation.dto.request.DepartmentSaveRequest;
+import com.updown.api.department.presentation.dto.request.DepartmentUpdateRequest;
 import com.updown.api.department.presentation.dto.response.DepartmentFindResponse;
 import com.updown.api.department.presentation.mapstruct.mapper.DepartmentEntityMapper;
 import com.updown.api.department.service.DepartmentService;
@@ -30,6 +31,25 @@ public class DepartmentController {
         return DepartmentEntityMapper.INSTANCE.departmentEntityToDepartmentFindResponseDTO(
                 departmentService.findAll()
         );
+    }
+
+    @GetMapping("/{id}")
+    public DepartmentFindResponse findDepartmentById(@PathVariable Long id) {
+        return DepartmentEntityMapper.INSTANCE.departmentEntityToDepartmentFindResponseDTO(
+                departmentService.findById(id)
+        );
+    }
+
+    @PutMapping("/{id}")
+    public DepartmentFindResponse updateDepartment(@PathVariable Long id, @Valid @RequestBody DepartmentUpdateRequest departmentUpdateRequest) {
+        return DepartmentEntityMapper.INSTANCE.departmentEntityToDepartmentFindResponseDTO(
+                departmentService.updateDepartment(id, departmentUpdateRequest)
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteDepartment(@PathVariable Long id) {
+        departmentService.deleteDepartment(id);
     }
 
 }

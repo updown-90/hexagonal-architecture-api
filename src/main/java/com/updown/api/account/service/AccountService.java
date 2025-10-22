@@ -64,11 +64,10 @@ public class AccountService {
     }
 
     private boolean isEmptyDBLoginId(AccountSaveRequest accountSaveRequest) {
-        accountEntityRepository.findAccountByLoginId(LoginId.of(accountSaveRequest.getLoginId()))
-                .ifPresent(accountEntity -> {   // ifPresent()는 Optional 객체가 값을 가지고 있으면 실행 값이 없으면 넘어감
-                    throw new CustomRuntimeException(ExceptionType.NOT_FOUND_USER);
-                });
-
+        // 로그인 ID가 이미 존재하는지 확인
+        if (accountEntityRepository.findAccountByLoginId(LoginId.of(accountSaveRequest.getLoginId())).isPresent()) {
+            throw new CustomRuntimeException(ExceptionType.DUPLICATE_USER);
+        }
         return true;
     }
 }

@@ -15,7 +15,7 @@ GET localhost:8080/departments/1
 Content-Type: application/json
 
 ### 부서 수정
-PUT localhost:8080/departments
+PUT localhost:8080/departments/1
 Content-Type: application/json
 
 {
