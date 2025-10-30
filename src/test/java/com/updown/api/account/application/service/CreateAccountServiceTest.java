@@ -3,7 +3,7 @@ package com.updown.api.account.application.service;
 import com.updown.api.account.application.port.in.dto.CreateAccountCommand;
 import com.updown.api.account.application.port.in.dto.AccountResponse;
 import com.updown.api.account.application.port.out.LoadAccountOutPort;
-import com.updown.api.account.application.port.out.LoadDepartmentOutPort;
+import com.updown.api.department.application.port.out.LoadDepartmentOutPort;
 import com.updown.api.account.application.port.out.SaveAccountOutPort;
 import com.updown.api.account.domain.Account;
 import com.updown.api.account.domain.AccountStatus;
