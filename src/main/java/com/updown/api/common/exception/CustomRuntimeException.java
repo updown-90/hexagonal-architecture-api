@@ -1,19 +1,17 @@
 package com.updown.api.common.exception;
 
+import lombok.Getter;
+
+/**
+ * 커스텀 런타임 예외
+ */
+@Getter
 public class CustomRuntimeException extends RuntimeException {
-
-    private String code;
-    private String message;
-
+    
+    private final ExceptionType exceptionType;
+    
     public CustomRuntimeException(ExceptionType exceptionType) {
-        this.code = exceptionType.getCode();
-        this.message = exceptionType.getMessage();
+        super(exceptionType.getMessage());
+        this.exceptionType = exceptionType;
     }
-
-    @Override
-    public String getMessage() {
-        return message;
-    }
-
-
 }
